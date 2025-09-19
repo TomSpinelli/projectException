@@ -1,0 +1,15 @@
+testes
+
+http://localhost:8080/animals/1
+http://localhost:8080/animals/buscar/nome/rafiki
+http://localhost:8080/animals/listar/especie/pinguim
+http://localhost:8080/animals/listar/idade/2
+http://localhost:8080/animals/listar/idade/maior/2
+
+json
+{
+  "nome": "Simba REI",
+  "especie": "Leão adulto",
+  "idade": 15
+}
+

@@ -1,0 +1,15 @@
+INSERT INTO animal (nome, especie, idade) VALUES ('simba', 'leão', 8);
+INSERT INTO animal (nome, especie, idade) VALUES ('nala', 'leoa', 7);
+INSERT INTO animal (nome, especie, idade) VALUES ('dumbo', 'elefante', 12);
+INSERT INTO animal (nome, especie, idade) VALUES ('kiko', 'girafa', 6);
+INSERT INTO animal (nome, especie, idade) VALUES ('rafiki', 'macaco', 4);
+INSERT INTO animal (nome, especie, idade) VALUES ('gloria', 'hipopótamo', 10);
+INSERT INTO animal (nome, especie, idade) VALUES ('marty', 'zebra', 5);
+INSERT INTO animal (nome, especie, idade) VALUES ('alex', 'leão', 9);
+INSERT INTO animal (nome, especie, idade) VALUES ('melman', 'girafa', 11);
+INSERT INTO animal (nome, especie, idade) VALUES ('julien', 'lêmure', 3);
+INSERT INTO animal (nome, especie, idade) VALUES ('skipper', 'pinguim', 2);
+INSERT INTO animal (nome, especie, idade) VALUES ('kowalski', 'pinguim', 2);
+INSERT INTO animal (nome, especie, idade) VALUES ('rico', 'pinguim', 2);
+INSERT INTO animal (nome, especie, idade) VALUES ('private', 'pinguim', 1);
+INSERT INTO animal (nome, especie, idade) VALUES ('shere khan', 'tigre', 13);
