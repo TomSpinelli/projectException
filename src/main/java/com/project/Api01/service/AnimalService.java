@@ -1,5 +1,6 @@
 package com.project.Api01.service;
 
+import com.project.Api01.dto.AnimalDto;
 import com.project.Api01.models.Animal;
 import com.project.Api01.repositories.AnimalRepository;
 import org.springframework.stereotype.Service;
@@ -16,41 +17,59 @@ public class AnimalService{
         this.animalRepository = animalRepository;
     }
 
-    public Animal buscarPorId(Long aLong){
+    public AnimalDto buscarPorId(Long aLong){
         Optional<Animal> animal = animalRepository.findById(aLong);
-        return animal.orElse(null);
+        return criarDto(animal.get());
     }
 
-    public Animal buscarPorNome(String nome){
+    public AnimalDto buscarPorNome(String nome){
         Optional<Animal> animal = animalRepository.findByNome(nome);
-        return animal.orElse(null);
+        return criarDto(animal.get());
     }
 
-    public List<Animal> buscarPorEspecie(String especie){
-        return animalRepository.findByEspecie(especie);
+    public List<AnimalDto> buscarPorEspecie(String especie){
+        return animalRepository.findByEspecie(especie).stream().map(
+                this::criarDto
+        ).toList();
     }
 
-    public List<Animal> buscarPorIdade(Long aLong){
-        return animalRepository.findByIdade(aLong);
+    public List<AnimalDto> buscarPorIdade(Long aLong){
+        return animalRepository.findByIdade(aLong).stream().map(
+                this::criarDto
+        ).toList();
     }
 
-    public List<Animal> buscarPorIdadeMaiorQue(Long aLong){
-        return animalRepository.findByIdadeGreaterThan(aLong);
+    public List<AnimalDto> buscarPorIdadeMaiorQue(Long aLong){
+        return animalRepository.findByIdadeGreaterThan(aLong).stream().map(
+                this::criarDto
+        ).toList();
     }
 
-    public Animal salvar(Animal animal){
+    public Animal salvar(AnimalDto dto){
+        Animal animal = criarAnimal(dto);
         return animalRepository.save(animal);
     }
 
-    public Animal update(Long id, Animal animal){
+    public Animal update(Long id, AnimalDto animalDto){
+        animalRepository.findById(id).orElseThrow(() ->new RuntimeException("Animal não existe"));
+        Animal animal = criarAnimal(animalDto);
         animal.setId(id);
-        animalRepository.findById(animal.getId()).orElseThrow(() ->new RuntimeException("Animal não existe"));
         return animalRepository.save(animal);
     }
 
     public void apagar(Long id){
         animalRepository.deleteById(id);
     }
+
+    public Animal criarAnimal(AnimalDto dto){
+        return Animal.builder().idade(dto.idade()).especie(dto.especie()).nome(dto.nome()).build();
+    }
+
+    public AnimalDto criarDto(Animal animal){
+        return new AnimalDto(animal.getNome(),animal.getEspecie(), animal.getIdade());
+    }
+
+
 
 
 }

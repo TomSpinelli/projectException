@@ -1,11 +1,17 @@
 package com.project.Api01.controllers;
 
+import com.project.Api01.dto.AnimalDto;
 import com.project.Api01.models.Animal;
 import com.project.Api01.service.AnimalService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/animals")
@@ -16,28 +22,30 @@ public class AnimalController {
 
     //GET
     @GetMapping("{id}")
-    public Animal buscarPorId(@PathVariable Long id){
-        return animalService.buscarPorId(id);
+    public ResponseEntity<?> buscarPorId(@PathVariable Long id){
+        AnimalDto animalDto = animalService.buscarPorId(id);
+        return ResponseEntity.ok(animalDto);
     }
 
     @GetMapping("/buscar/nome/{nome}")
-    public Animal buscarPorNome(@PathVariable String nome){
-        return animalService.buscarPorNome(nome);
+    public ResponseEntity<?> buscarPorNome(@PathVariable String nome){
+        AnimalDto animalDto = animalService.buscarPorNome(nome);
+        return ResponseEntity.ok(animalDto);
     }
 
     @GetMapping("/listar/especie/{especie}")
-    public List<Animal> listarPorEspecie(@PathVariable String especie){
-        return animalService.buscarPorEspecie(especie);
+    public ResponseEntity<List<AnimalDto>> listarPorEspecie(@PathVariable String especie){
+        return ResponseEntity.ok(animalService.buscarPorEspecie(especie));
     }
 
     @GetMapping("/listar/idade/{idade}")
-    public List<Animal> listarPorIdade(@PathVariable Long idade){
-        return animalService.buscarPorIdade(idade);
+    public ResponseEntity<List<AnimalDto>> listarPorIdade(@PathVariable Long idade){
+        return ResponseEntity.ok(animalService.buscarPorIdade(idade));
     }
 
     @GetMapping("/listar/idade/maior/{idade}")
-    public List<Animal> listarPorIdadeMaiorQue(@PathVariable Long idade){
-        return animalService.buscarPorIdadeMaiorQue(idade);
+    public ResponseEntity<List<AnimalDto>> listarPorIdadeMaiorQue(@PathVariable Long idade){
+        return ResponseEntity.ok(animalService.buscarPorIdadeMaiorQue(idade));
     }
 
     //DELETE
@@ -48,14 +56,23 @@ public class AnimalController {
 
     //POST
     @PostMapping("{id}")
-    public Animal salvar(@RequestBody Animal animal){
-        return animalService.salvar(animal);
+    public ResponseEntity<?> salvar(@Valid @RequestBody AnimalDto dto, BindingResult result){
+        if(result.hasErrors()){
+            Map<String, String> errors = new HashMap<>();
+            result.getFieldErrors().forEach(error ->
+                    errors.put(error.getField(),error.getDefaultMessage()));
+            return ResponseEntity.badRequest().body(errors);
+        }
+
+        Animal animal = animalService.salvar(dto);
+        return ResponseEntity.ok(animal);
     }
 
     //PUT
     @PutMapping("{id}")
-    public void update(@PathVariable Long id, @RequestBody Animal animal){
-        animalService.update(id ,animal);
+    public ResponseEntity<?> update(@PathVariable Long id, @Valid @RequestBody AnimalDto dto){
+        Animal animal = animalService.update(id ,dto);
+        return ResponseEntity.ok(animal);
     }
 
 }
