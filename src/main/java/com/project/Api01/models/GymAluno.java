@@ -1,9 +1,7 @@
 package com.project.Api01.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,16 +12,19 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Animal {
+public class GymAluno {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, length = 20)
     private String nome;
 
-    private String especie;
+    @Column(nullable = false, length = 20)
+    private String modalidade;
 
+    @Positive(message = "A idade deve ser maior que 0")
     private Long idade;
 
     public Long getId() {
@@ -42,12 +43,12 @@ public class Animal {
         this.nome = nome;
     }
 
-    public String getEspecie() {
-        return especie;
+    public String getModalidade() {
+        return modalidade;
     }
 
-    public void setEspecie(String especie) {
-        this.especie = especie;
+    public void setModalidade(String modalidade) {
+        this.modalidade = modalidade;
     }
 
     public Long getIdade() {
