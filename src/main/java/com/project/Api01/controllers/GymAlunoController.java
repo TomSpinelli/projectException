@@ -6,6 +6,7 @@ import com.project.Api01.service.GymAlunoService;
 import com.project.Api01.service.GymAlunoServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +23,15 @@ public class GymAlunoController {
     private GymAlunoServiceImpl gymAlunoService;
 
     //GET
+    @GetMapping("/all")
+    public ResponseEntity<Page<GymAlunoDto>> getAll(@RequestParam(defaultValue = "0") int page,
+                                                   @RequestParam(defaultValue = "3") int size,
+                                                   @RequestParam(defaultValue = "id") String sort,
+                                                   @RequestParam(defaultValue = "asc") String direction){
+        return ResponseEntity.ok(gymAlunoService.buscarTodos(page, size, sort, direction));
+    }
+
+
     @GetMapping("{id}")
     public ResponseEntity<?> buscarPorId(@PathVariable Long id){
         GymAlunoDto gymAlunoDto = gymAlunoService.buscarPorId(id);

@@ -1,6 +1,8 @@
 package com.project.Api01.repositories;
 
 import com.project.Api01.models.GymAluno;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -12,6 +14,5 @@ public interface GymAlunoRepository extends JpaRepository<GymAluno,Long> {
 
     List<GymAluno> findByIdade(Long idade);
 
-    List<GymAluno> findByIdadeGreaterThan(Long idade);
-
+    Page<GymAluno> findAll(Pageable pageable);
 }
